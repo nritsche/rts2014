@@ -45,7 +45,13 @@ void list_append(list_t list, int data)
 
 void list_print(list_t list)
 {
+	struct node cur = list->head;
 
+	while (cur->next != NULL) {
+		printf ("%d ", cur->data);
+		cur = cur->next;
+	}
+	printf ("\n");
 }
 
 long list_sum(list_t list)
