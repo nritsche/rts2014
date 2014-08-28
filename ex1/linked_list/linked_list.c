@@ -40,6 +40,11 @@ void list_insert(list_t list, int index, int data)
 
 void list_append(list_t list, int data)
 {
+	if (list == NULL) {
+		perror ("list_append: argument list invalid\n");
+		return;
+	}
+
 	struct node new_node = malloc (sizeof(struct node));
 
 	if (new_node == NULL) {
@@ -65,7 +70,13 @@ void list_print(list_t list)
 
 long list_sum(list_t list)
 {
-
+	int sum = 0;
+	struct node cur = list->head;
+	while (cur->next != NULL) {
+		sum += cur->data;
+		cur = cur->next;
+	}
+	return sum;
 }
 
 int list_get(list_t list, int index)
