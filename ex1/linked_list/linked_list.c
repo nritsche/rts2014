@@ -20,8 +20,21 @@ void list_delete(list_t list)
 {
 /*entry test*/
 	if(!list){
-		perror("the argument invalid");
+		perror("list_delete: the argument invalid");
 	}
+	struct node * cur = list->head;
+
+	if (cur == NULL)
+		return;
+
+	while (cur->next != NULL) {
+		cur = cur->next;
+		free(cur->prev);
+	}
+
+	free (cur);
+
+	return;
 }
 
 void list_insert(list_t list, int index, int data)
