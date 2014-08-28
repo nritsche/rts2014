@@ -85,6 +85,11 @@ void list_print(list_t list)
 {
 	struct node * cur = list->head;
 
+	if (cur == NULL) {
+		printf("list empty\n");
+		return;
+	}
+
 	while (cur->next != NULL) {
 		printf ("%d ", cur->data);
 		cur = cur->next;
