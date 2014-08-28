@@ -1,21 +1,13 @@
-# program executable name
-TARGET = linkedlist
-# compiler flags
+TARGET = linked_list
 CFLAGS = -g -Wall
-# linker flags
 LDFLAGS = -g
-# list of sources
 SOURCES = $(shell find -name "*.c")
-# default rule, to compile everything
 all: $(TARGET)
-# define object files
 OBJECTS = $(SOURCES:.c=.o)
-# link programs
 $(TARGET): $(OBJECTS)
-gcc $(LDFLAGS) -o $@ $^
-# compile
+	gcc $(LDFLAGS) -o $@ $^
 %.o : %.c
-gcc $(CFLAGS) -c -o $@ $<
-# cleaning
+	gcc $(CFLAGS) -c -o $@ $<
 clean:
-rm -f $(TARGET) $(OBJECTS)
+	rm -f $(TARGET) $(OBJECTS)
+
