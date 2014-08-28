@@ -22,14 +22,6 @@ void list_delete(list_t list)
 	if(!list){
 		perror("list_delete: the argument invalid");
 	}
-<<<<<<< HEAD
-	struct node * current = list->head;
-	while(current->next){
-		// next is not null, or current not tail
-		current=
-		free()
-	}
-=======
 	struct node * cur = list->head;
 
 	if (cur == NULL)
@@ -44,7 +36,6 @@ void list_delete(list_t list)
 	free (list);
 
 	return;
->>>>>>> c01b6f80ffada1aeb4170395167a30b02a966be2
 }
 
 void list_insert(list_t list, int index, int data)
@@ -56,18 +47,16 @@ void list_insert(list_t list, int index, int data)
 			return;
 		}
 	struct node * current = list->head;
-<<<<<<< HEAD
 	struct node * new = malloc(sizeof(struct node));
 	if(!new){
 		perror(" node creating errror1");
 		return;
 	}
 	new->data = data;
+	if(current == NULL) {
+		
 	// get the position to insert
-	for(int i = 0; i < index; i++){
-=======
 	for(i = 0; i<= index; i++){
->>>>>>> c01b6f80ffada1aeb4170395167a30b02a966be2
 		current = current->next;
 	}
 	current->next->prev = new;
@@ -92,15 +81,18 @@ void list_append(list_t list, int data)
 		return;
 	}
 
-	if (list->head == NULL)
+	if (list->head == NULL) {
 		list->head = new_node;
+		list->tail = list->head;
+	}
 	else {
 		list->tail->next = new_node;
 		list->tail = new_node;
 	}
 
-	list->next = NULL;
+	new_node->next = NULL;
 	new_node->data = data;
+	list->length++;
 
 	new_node = NULL;
 }
@@ -149,7 +141,6 @@ int list_get(list_t list, int index)
 		i++;
 	}
 
-	cur = NULL;
 	return cur->data;
 }
 
@@ -169,9 +160,17 @@ int list_extract(list_t list, int index)
 	ret = cur->data;
 
 	//remove node
-	cur->prev->next = cur->next;
-	cur->next->prev = cur->prev;
+	if (cur->prev == NULL)
+		list->head = cur->next;
+	else
+		cur->prev->next = cur->next;
+	if (cur->next == NULL)
+		list->tail = cur->prev;
+	else
+		cur->next->prev = cur->prev;
+
 	free(cur);
+	list->length--;
 
 	cur = NULL;
 	return ret;
