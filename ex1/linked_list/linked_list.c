@@ -33,6 +33,7 @@ void list_delete(list_t list)
 	}
 
 	free (cur);
+	free (list);
 
 	return;
 }
@@ -67,9 +68,15 @@ void list_append(list_t list, int data)
 		return;
 	}
 
+	if (list->head == NULL)
+		list->head = new_node;
+	else {
+		list->tail->next = new_node;
+		list->tail = new_node;
+	}
+
+	list->next = NULL;
 	new_node->data = data;
-	list->tail->next = new_node;
-	list->tail = new_node;
 
 	new_node = NULL;
 }
