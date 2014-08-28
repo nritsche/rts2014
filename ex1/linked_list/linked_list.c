@@ -31,7 +31,16 @@ void list_insert(list_t list, int index, int data)
 
 void list_append(list_t list, int data)
 {
+	struct node new_node = malloc (sizeof(struct node));
 
+	if (new_node == NULL) {
+		perror ("list_append: malloc: out of memory\n");
+		return;
+	}
+
+	new_node->data = data;
+	list->tail->next = new_node;
+	list->tail = new_node;
 }
 
 void list_print(list_t list)
