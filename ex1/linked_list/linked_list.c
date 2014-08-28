@@ -36,7 +36,7 @@ int list_get(list_t list, int index)
 {
 	struct node cur = list->head;
 	int i = 0;
-	while (i != indexA) {
+	while (i != index) {
 		cur = cur->next;
 		i++;
 	}
@@ -45,5 +45,19 @@ int list_get(list_t list, int index)
 
 int list_extract(list_t list, int index)
 {
+	int ret;
+	struct node cur = list->head;
+	int i = 0;
+	while (i != index) {
+		cur = cur->next;
+		i++;
+	}
+	ret = cur->data;
 
+	//remove node
+	cur->prev->next = cur->next;
+	cur->next->prev = cur->prev;
+	free(cur);
+
+	return ret;
 }
