@@ -22,6 +22,12 @@ void list_delete(list_t list)
 	if(!list){
 		perror("the argument invalid");
 	}
+	struct node * current = list->head;
+	while(current->next){
+		// next is not null, or current not tail
+		current=
+		free()
+	}
 }
 
 void list_insert(list_t list, int index, int data)
@@ -31,10 +37,21 @@ void list_insert(list_t list, int index, int data)
 			return;
 		}
 	struct node * current = list->head;
-	for(int i = 0; i<= index; i++){
+	struct node * new = malloc(sizeof(struct node));
+	if(!new){
+		perror(" node creating errror1");
+		return;
+	}
+	new->data = data;
+	// get the position to insert
+	for(int i = 0; i < index; i++){
 		current = current->next;
 	}
-	current->data = data;
+	current->next->prev = new;
+	new->next = current->next;
+	current->next = new;
+	new->prev = current;
+	list->length++;
 	current =  NULL;/* tangle pointer */
 }
 
