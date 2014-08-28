@@ -53,10 +53,16 @@ void list_insert(list_t list, int index, int data)
 		return;
 	}
 	new->data = data;
-	if(current == NULL) {
-		
+	if(current == NULL && index != 0) {
+		perror ("list_insert: index out of bounds");
+		return;
+	}
 	// get the position to insert
 	for(i = 0; i<= index; i++){
+		if (current->next == NULL) {
+			perror ("list_insert: index out of bounds");
+			return;
+		}
 		current = current->next;
 	}
 	current->next->prev = new;
@@ -86,6 +92,7 @@ void list_append(list_t list, int data)
 		list->tail = list->head;
 	}
 	else {
+		new_node->prev = list->tail;
 		list->tail->next = new_node;
 		list->tail = new_node;
 	}
