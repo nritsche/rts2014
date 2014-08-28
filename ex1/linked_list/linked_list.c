@@ -103,6 +103,10 @@ long list_sum(list_t list)
 {
 	int sum = 0;
 	struct node * cur = list->head;
+
+	if (cur == NULL)
+		return 0;
+
 	while (cur->next != NULL) {
 		sum += cur->data;
 		cur = cur->next;
