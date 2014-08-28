@@ -24,8 +24,10 @@ void list_delete(list_t list)
 	}
 	struct node * cur = list->head;
 
-	if (cur == NULL)
+	if (cur == NULL) {
+		free(list);
 		return;
+	}
 
 	while (cur->next != NULL) {
 		cur = cur->next;
@@ -90,6 +92,7 @@ void list_append(list_t list, int data)
 	if (list->head == NULL) {
 		list->head = new_node;
 		list->tail = list->head;
+		new_node->prev = NULL;
 	}
 	else {
 		new_node->prev = list->tail;
@@ -156,6 +159,11 @@ int list_extract(list_t list, int index)
 	int ret;
 	struct node * cur = list->head;
 	int i = 0;
+
+	if (cur == NULL && index != 0) {
+		perror("list_extract: index out of bounds");
+		return 0;
+	}
 	while (i != index) {
 		if (cur->next == NULL) {
 			perror("list_extract: index out of bounds");

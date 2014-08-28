@@ -13,11 +13,17 @@
 void allocate(int value){
 	int *ptr = NULL;
 	ptr = malloc(10000 * sizeof(int));
+
+	if (ptr == NULL) {
+		perror("allocate:malloc: out of mem");
+		return;
+	}
 	*ptr = value;
 	printf("test of allocated memory: %i\n",value);
 }
 int main(void) {
 	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
-	allocate(1000);
+	while (1)
+		allocate(1000);
 	return EXIT_SUCCESS;
 }
