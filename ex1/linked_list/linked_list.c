@@ -45,7 +45,7 @@ void list_append(list_t list, int data)
 		return;
 	}
 
-	struct node new_node = malloc (sizeof(struct node));
+	struct node * new_node = malloc (sizeof(struct node));
 
 	if (new_node == NULL) {
 		perror ("list_append: malloc: out of memory\n");
@@ -59,7 +59,7 @@ void list_append(list_t list, int data)
 
 void list_print(list_t list)
 {
-	struct node cur = list->head;
+	struct node * cur = list->head;
 
 	while (cur->next != NULL) {
 		printf ("%d ", cur->data);
@@ -71,7 +71,7 @@ void list_print(list_t list)
 long list_sum(list_t list)
 {
 	int sum = 0;
-	struct node cur = list->head;
+	struct node * cur = list->head;
 	while (cur->next != NULL) {
 		sum += cur->data;
 		cur = cur->next;
@@ -81,7 +81,7 @@ long list_sum(list_t list)
 
 int list_get(list_t list, int index)
 {
-	struct node cur = list->head;
+	struct node * cur = list->head;
 	int i = 0;
 	while (i != index) {
 		cur = cur->next;
@@ -93,7 +93,7 @@ int list_get(list_t list, int index)
 int list_extract(list_t list, int index)
 {
 	int ret;
-	struct node cur = list->head;
+	struct node * cur = list->head;
 	int i = 0;
 	while (i != index) {
 		cur = cur->next;
