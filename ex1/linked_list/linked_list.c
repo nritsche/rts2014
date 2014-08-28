@@ -34,7 +34,13 @@ long list_sum(list_t list)
 
 int list_get(list_t list, int index)
 {
-
+	struct node cur = list->head;
+	int i = 0;
+	while (i != indexA) {
+		cur = cur->next;
+		i++;
+	}
+	return cur->data;
 }
 
 int list_extract(list_t list, int index)
