@@ -4,12 +4,24 @@
 
 list_t list_create()
 {
-
+	list_t ptr = NULL;
+	ptr = malloc(sizeof(struct list));
+	if(!ptr){
+		perror("list creation error");
+		return NULL;
+	}
+	ptr->head = NULL;
+	ptr->tail = NULL;
+	ptr->length = 0;
+	return ptr;
 }
 
 void list_delete(list_t list)
 {
-
+/*entry test*/
+	if(!list){
+		perror("the argument invalid");
+	}
 }
 
 void list_insert(list_t list, int index, int data)
