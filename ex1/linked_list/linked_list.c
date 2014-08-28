@@ -41,8 +41,10 @@ void list_print(list_t list)
 
 long list_sum(list_t list)
 {
+	int sum = 0;
 	struct node cur = list->head;
-
+	
+	while (cur->next != NULL
 }
 
 int list_get(list_t list, int index)
@@ -52,6 +54,8 @@ int list_get(list_t list, int index)
 	while (i != index) {
 		cur = cur->next;
 		i++;
+		if (cur->next == NULL && i != index)
+			return 0;
 	}
 	return cur->data;
 }
@@ -64,6 +68,8 @@ int list_extract(list_t list, int index)
 	while (i != index) {
 		cur = cur->next;
 		i++;
+		if (cur->next == NULL && i != index)
+			return 0;
 	}
 	ret = cur->data;
 
