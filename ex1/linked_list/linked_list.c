@@ -41,6 +41,7 @@ void list_print(list_t list)
 
 long list_sum(list_t list)
 {
+	struct node cur = list->head;
 
 }
 
@@ -67,8 +68,18 @@ int list_extract(list_t list, int index)
 	ret = cur->data;
 
 	//remove node
-	cur->prev->next = cur->next;
-	cur->next->prev = cur->prev;
+	if (cur->prev == NULL) { //remove head
+		list->head = cur->next;
+		cur->next->prev = NULL;
+	}
+	else if (cur->next == NULL) { //remove tail
+		list->tail = cur->prev;
+		cur->prev->next = NULL;
+	}
+	else {
+		cur->prev->next = cur->next;
+		cur->next->prev = cur->prev;
+	}
 	free(cur);
 
 	return ret;
