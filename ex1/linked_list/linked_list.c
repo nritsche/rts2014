@@ -55,6 +55,8 @@ void list_append(list_t list, int data)
 	new_node->data = data;
 	list->tail->next = new_node;
 	list->tail = new_node;
+
+	new_node = NULL;
 }
 
 void list_print(list_t list)
@@ -66,6 +68,8 @@ void list_print(list_t list)
 		cur = cur->next;
 	}
 	printf ("\n");
+
+	cur = NULL;
 }
 
 long list_sum(list_t list)
@@ -76,6 +80,8 @@ long list_sum(list_t list)
 		sum += cur->data;
 		cur = cur->next;
 	}
+
+	cur = NULL;
 	return sum;
 }
 
@@ -87,6 +93,8 @@ int list_get(list_t list, int index)
 		cur = cur->next;
 		i++;
 	}
+
+	cur = NULL;
 	return cur->data;
 }
 
@@ -108,5 +116,6 @@ int list_extract(list_t list, int index)
 	cur->next->prev = cur->prev;
 	free(cur);
 
+	cur = NULL;
 	return ret;
 }
