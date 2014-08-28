@@ -26,12 +26,14 @@ void list_delete(list_t list)
 
 void list_insert(list_t list, int index, int data)
 {
+	int i;
+
 	if(!list){
 			perror("the argument invalid");
 			return;
 		}
 	struct node * current = list->head;
-	for(int i = 0; i<= index; i++){
+	for(i = 0; i<= index; i++){
 		current = current->next;
 	}
 	current->data = data;
@@ -106,6 +108,8 @@ int list_extract(list_t list, int index)
 	while (i != index) {
 		if (cur->next == NULL) {
 			perror("list_extract: index out of bounds");
+			return 0;
+		}
 		cur = cur->next;
 		i++;
 	}
