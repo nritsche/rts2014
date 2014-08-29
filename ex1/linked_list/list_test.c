@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 
 	// insert value in the middle of the list
 	printf("insert value in the middle of the list\n");
-	list_insert(list, 5, 99);
+	list_insert(list, 0, 99);
 	list_print(list);
 
 	// get inserted value

@@ -59,18 +59,26 @@ void list_insert(list_t list, int index, int data)
 		perror ("list_insert: index out of bounds");
 		return;
 	}
-	// get the position to insert
-	for(i = 0; i<= index; i++){
-		if (current->next == NULL) {
-			perror ("list_insert: index out of bounds");
-			return;
-		}
-		current = current->next;
+
+	if (index == 0) {
+		new->next = list->head;
+		list->head = new;
 	}
+	else {
+		// get the position to insert
+		for(i = 0; i< index-1; i++){
+			if (current->next == NULL) {
+				perror ("list_insert: index out of bounds");
+				return;
+			}
+			current = current->next;
+		}
+	
 	current->next->prev = new;
 	new->next = current->next;
 	current->next = new;
 	new->prev = current;
+	}
 	list->length++;
 	current =  NULL;/* tangle pointer */
 }
