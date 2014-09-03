@@ -3,6 +3,7 @@
 #include <stdio.h>
 
 #define NUMBER 3
+#define VFORK 0
 
 int global = 0;
 
@@ -12,7 +13,11 @@ int main(void)
 	int i;
 	int local = 0;
 
+#if VFORK
 	id = vfork();
+#else
+	id = fork();
+#endif
 
 	if (id == -1) {
 		perror ("fork failed");
@@ -25,6 +30,7 @@ int main(void)
 			local++;
 			printf("child: global=%d, local=%d\n", global, local);
 		}
+		_exit(0);
 	}
 	else {			//parent
 		for (i = 0; i < NUMBER; i++) {
