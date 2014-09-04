@@ -1,0 +1,21 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+BUF	mutex.c	8;"	d	file:
+CFLAGS	Makefile	/^CFLAGS = -g -Wall$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS = -g -lpthread -lrt$/;"	m
+MAX_THREADS	mutex.c	7;"	d	file:
+OBJECTS	Makefile	/^OBJECTS = $(SOURCES:.c=.o)$/;"	m
+SOURCES	Makefile	/^SOURCES = $(shell find -name "*.c")$/;"	m
+TARGET	Makefile	/^TARGET = mutex$/;"	m
+data	mutex.c	/^struct data {$/;"	s	file:
+data::msg	mutex.c	/^   char msg[BUF];$/;"	m	struct:data	file:	access:public
+data::value	mutex.c	/^   int value;$/;"	m	struct:data	file:	access:public
+main	mutex.c	/^int main(void)$/;"	f	signature:(void)
+msg	mutex.c	/^   char msg[BUF];$/;"	m	struct:data	file:	access:public
+mythread	mutex.c	/^static void *mythread (void *arg) {$/;"	f	file:	signature:(void *arg)
+sem	mutex.c	/^sem_t sem;$/;"	v
+value	mutex.c	/^   int value;$/;"	m	struct:data	file:	access:public
