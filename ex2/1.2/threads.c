@@ -11,9 +11,15 @@ struct data {
    char msg[BUF];
 };
 
+int global = 0;
+
 static void *mythread (void *arg) {
-	printf("hello, i'm a thread\n");
-	sleep(5);
+	int i, local = 0;
+	for (i = 0; i < 3; i++) {
+		global++;
+		local++;
+		printf("local = %d, global = %d\n", local, global);
+	}
    return arg;
 }
 
@@ -41,6 +47,5 @@ int main (void) {
    for( i=0; i < MAX_THREADS; i++)
       pthread_join(th[i], (void **)&ret[i]);
 
-   printf("<- Main-Thread finished\n");
    return EXIT_SUCCESS;
 }
