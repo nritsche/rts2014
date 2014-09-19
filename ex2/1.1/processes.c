@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #define NUMBER 3
-#define VFORK 0
+#define VFORK 1
 
 int global = 0;
 
