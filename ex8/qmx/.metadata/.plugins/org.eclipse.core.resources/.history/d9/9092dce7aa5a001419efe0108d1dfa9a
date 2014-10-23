@@ -1,0 +1,52 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/dispatch.h>
+#include <sys/mman.h>
+
+#define BUFSIZE 20
+
+struct pid_data{
+	pthread_mutex_t pid_mutex;
+	pid_t pid;
+};
+
+int main(int argc, char *argv[]) {
+	printf("Welcome to 1\n");
+
+	char *buf;
+	pthread_mutexattr_t myattr;
+
+	buf = malloc(BUFSIZE);
+	if (buf == NULL){
+		perror("malloc");
+		return EXIT_FAILURE;
+	}
+
+	//create shared mem object
+	int f = shm_open("dev/shmem", O_RDWR | O_CREAT, S_IRWXU);
+	ftruncate(f, sizeof(struct pid_data));
+	struct pid_data *share = mmap(0, sizeof(struct pid_data), PROT_READ | PROT_WRITE, MAP_SHARED, f, 0);
+
+	share->pid = getpid();
+
+	pthread_mutexattr_init(&myattr);
+	pthread_mutexattr_setpshared(&myattr, PTHREAD_PROCESS_SHARED);
+	pthread_mutex_init(&share->pid_mutex, &myattr);
+
+	printf("1 wrote pid as %d\n", share->pid); 	//454693
+												//454693
+
+	int id = ChannelCreate(0);
+	int recv_id = MsgReceive(id, buf, BUFSIZE, NULL);
+
+	printf("1 received message: %s", *buf);
+
+	*buf = "reply"
+	MsgReply(recv_id, EOK, buf, 5);
+
+	return EXIT_SUCCESS;
+}

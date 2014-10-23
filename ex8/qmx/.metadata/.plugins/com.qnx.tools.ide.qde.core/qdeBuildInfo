@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QdeProjectsBuildInfo>
+<qdeBuildInfo IMemento.internal.id="C:/Users/rickn/qmx/test" buildConfig="_x86_r" projectName="test">
+<srcDirs>
+<element>C:/Users/rickn/qmx/test/x86/o</element>
+<element>C:/Users/rickn/qmx/test/x86</element>
+<element>C:/Users/rickn/qmx/test</element>
+</srcDirs>
+<libDirs>
+<element>C:/Users/rickn/qmx/test/x86/o</element>
+<element>C:/QNX650/target/qnx6/x86/lib</element>
+<element>C:/QNX650/target/qnx6/x86/usr/lib</element>
+</libDirs>
+<incDirs>
+<element>C:/QNX650/target/qnx6/usr/include</element>
+<element>C:/Users/rickn/qmx/test/x86/o</element>
+<element>C:/Users/rickn/qmx/test/x86</element>
+<element>C:/Users/rickn/qmx/test</element>
+</incDirs>
+<libs/>
+<SRCS>
+<element>C:/Users/rickn/qmx/test/test.c</element>
+</SRCS>
+</qdeBuildInfo>
+<qdeBuildInfo IMemento.internal.id="C:/Users/rickn/qmx/test2" buildConfig="_x86_r" projectName="test2">
+<srcDirs>
+<element>C:/Users/rickn/qmx/test2/x86/o</element>
+<element>C:/Users/rickn/qmx/test2/x86</element>
+<element>C:/Users/rickn/qmx/test2</element>
+</srcDirs>
+<libDirs>
+<element>C:/Users/rickn/qmx/test2/x86/o</element>
+<element>C:/QNX650/target/qnx6/x86/lib</element>
+<element>C:/QNX650/target/qnx6/x86/usr/lib</element>
+</libDirs>
+<incDirs>
+<element>C:/QNX650/target/qnx6/usr/include</element>
+<element>C:/Users/rickn/qmx/test2/x86/o</element>
+<element>C:/Users/rickn/qmx/test2/x86</element>
+<element>C:/Users/rickn/qmx/test2</element>
+</incDirs>
+<libs/>
+<SRCS>
+<element>C:/Users/rickn/qmx/test2/test2.c</element>
+</SRCS>
+</qdeBuildInfo>
+</QdeProjectsBuildInfo>
