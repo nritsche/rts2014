@@ -48,7 +48,7 @@ int main(){
 	double kp = 10;
 	double ki = 800;
 
-	double period = 3000;
+	double period = 2000;
 
 	struct timespec next;
 
