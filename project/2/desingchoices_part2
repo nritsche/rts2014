@@ -1,0 +1,25 @@
+The only thread that reads udp mesages is the udp listener.
+It decides based on the first letter of the message (G or S)
+which thread should be awaken.
+For get_ack it parses the value to a double and saves it in a global variable.
+Then it signals the pi controller to wake up.
+For the signal-response message it just wakes the signal thread.
+
+The signaling between threads is done with semaphores.
+The pi thread and the signal response thread wait for a semaphore to raise.
+The udp listener posts the semaphore for the thread it wants to wake up.
+
+The Signal thread writes a SIGNAL_ACK to the server,
+locks the semaphore and waits again for the semaphore.
+
+The PI Thread will ask the server for the current value,
+wait until the udp_listener signales that the answer arrives
+After calculating and sending the input to the server it sleeps for it's period.
+
+Since the system has a bigger overhead we had to raise the period to 5000 us to avoid missed deadlines.
+
+All udp_send calls are protected by a mutex.
+After a thread wakes up it checkes if the run flag is still set.
+The Main loop will sleep for 5 seconds and deactivate the run flag.
+Before returning from the udp function both semaphores get signaled
+to prevent pi and respond threads from getting stuck waiting for semaphores.
