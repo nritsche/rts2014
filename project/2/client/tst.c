@@ -2,11 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include "miniproject.h"
 
-pthread_mutex_t buff_mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t snd_mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t result_mutex = PTHREAD_MUTEX_INITIALIZER;
+
+sem_t pi_sem;
+sem_t resp_sem;
 
 
 struct udp_conn server;
@@ -34,17 +36,32 @@ static void *thread_udp (void *arg) {
 	while (flag_run) {
 	         	    
 		udp_receive(&server, buffer_recv, 100);
-		printf("recieved: %s\n", buffer_recv);
+		//printf("recieved: %s\n", buffer_recv);
 		
 		if(buffer_recv[0] == 'G'){
 		    y = atof(buffer_recv + 8);
-		    // wake up pi   
+		    // wake up pi 
+		    if(sem_post(&pi_sem)){
+                perror("sem unlock");
+                exit(-1);
+            }
 	    }
 	    else{
 	        // wake up response
+	        if(sem_post(&resp_sem)){
+                perror("sem unlock");
+                exit(-1);
+            }
 	    }
 	}
-	
+	if(sem_post(&resp_sem)){
+        perror("sem unlock");
+        exit(-1);
+    }
+    if(sem_post(&pi_sem)){
+        perror("sem unlock");
+        exit(-1);
+    }
 	return NULL;
 }
 
@@ -52,15 +69,15 @@ static void *thread_pi (void *arg) {
 
     static double i = 0;
     
-    double period = 2000;
+    double period = 4000;
     double kp = 10;
     double ki = 800;
     
     struct timespec next;
-    float period = 2000;
+    
     clock_gettime(CLOCK_REALTIME, &next);
     
-    while(flag_run){
+    while(1){
     
         if(pthread_mutex_lock(&snd_mutex)){
             perror("pthread lock");
@@ -75,11 +92,17 @@ static void *thread_pi (void *arg) {
         }
         
         //wait
+        if(sem_wait(&pi_sem)){
+                perror("sem lock");
+                exit(-1);
+        }
         
+        if(!flag_run)
+            return NULL;
            
         double p = 1 - y;
         
-        i += p * period / 1000 / 1000 ;
+        i += p * period / 1000 / 1000;
         
         float u = kp * p + ki * i;
         
@@ -101,16 +124,21 @@ static void *thread_pi (void *arg) {
         timespec_add_us(&next, period);
         clock_nanosleep(&next);
     }
-    
-    return NULL;
 }
 
 static void *thread_respond (void *arg) {
     
     
-    while(flag_run){
+    while(1){
     
-        // wait
+        // wait for signal to wake up
+        if(sem_wait(&resp_sem)){
+                perror("sem lock");
+                exit(-1);
+        }
+        
+        if(!flag_run)
+            return NULL;
         
         if(pthread_mutex_lock(&snd_mutex)){
             perror("pthread lock");
@@ -125,7 +153,6 @@ static void *thread_respond (void *arg) {
         }
         
      }
-     return NULL;
 }
 
 
@@ -133,6 +160,15 @@ pthread_t thread[3];
 
 int main(){
 
+    if (sem_init(&resp_sem,0,0)) {
+        perror("sem_init");
+        exit (-1);
+    }
+    if (sem_init(&pi_sem,0,0)) {
+        perror("sem_init");
+        exit (-1);
+    }
+    
     if(udp_init_client(&server, 9999, "192.168.0.1")){
 		perror("udp_init_client");
 		return -1;
